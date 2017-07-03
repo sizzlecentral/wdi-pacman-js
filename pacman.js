@@ -1,6 +1,7 @@
 // Setup initial game stats
 var score = 0;
 var lives = 2;
+var powerPellets = 4;
 
 // Define your ghosts here
 
@@ -57,6 +58,7 @@ function clearScreen() {
 
 function displayStats() {
   console.log('Score: ' + score + '     Lives: ' + lives);
+  console.log('\nPower-Pellets: ' + powerPellets);
 }
 
 function displayMenu() {
