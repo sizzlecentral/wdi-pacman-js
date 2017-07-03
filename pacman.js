@@ -2,7 +2,6 @@
 var score = 0;
 var lives = 2;
 
-
 // Define your ghosts here
 
 var ghosts = [inky, blinky, pinky, clyde]
@@ -83,9 +82,16 @@ function eatDot() {
 }
 
 function eatGhost(ghost) {
-  if (ghost["edible"] === false)
+  if (ghost["edible"] === false) {
   console.log('\nChomp! ' + ghost["name"] + ' the ' + ghost["colour"] + ' ghost just killed Pac-Man!');
   lives -= 1;
+  }
+}
+
+function gameOver() {
+  if (lives === 0) {
+    process.exit();
+  }
 }
 
 // Process Player's Input
@@ -100,21 +106,24 @@ function processInput(key) {
       break;
     case '1':
       eatGhost(inky);
+      gameOver();
       break;
     case '2':
       eatGhost(blinky);
+      gameOver();
       break;
     case '3':
       eatGhost(pinky);
+      gameOver();
       break;
     case '4':
       eatGhost(clyde);
+      gameOver();
       break;
     default:
       console.log('\nInvalid Command!');
   }
 }
-
 
 //
 // YOU PROBABLY DON'T WANT TO CHANGE CODE BELOW THIS LINE
