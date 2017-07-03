@@ -82,8 +82,10 @@ function eatDot() {
   score += 10;
 }
 
-function eatGhost() {
-  console.log('\nChomp!');
+function eatGhost(ghost) {
+  if (ghost["edible"] === false)
+  console.log('\nChomp! ' + ghost["name"] + ' the ' + ghost["colour"] + ' ghost just killed Pac-Man!');
+  lives -= 1;
 }
 
 // Process Player's Input
