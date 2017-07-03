@@ -62,13 +62,24 @@ function displayStats() {
 }
 
 function displayMenu() {
-  console.log('\n\nSelect Option:\n');  // each \n creates a new line
-  console.log('(d) Eat Dot');
-  console.log('(1) Eat Inky');
-  console.log('(2) Eat Blinky');
-  console.log('(3) Eat Pinky');
-  console.log('(4) Eat Clyde');
-  console.log('(q) Quit');
+  if (powerPellets === 0) {
+    console.log('\n\nSelect Option:\n');  // each \n creates a new line
+    console.log('(d) Eat Dot');
+    console.log('(1) Eat Inky' + showEdible(inky));
+    console.log('(2) Eat Blinky' + showEdible(blinky));
+    console.log('(3) Eat Pinky' + showEdible(pinky));
+    console.log('(4) Eat Clyde' + showEdible(clyde));
+    console.log('(q) Quit');
+  } else {
+    console.log('\n\nSelect Option:\n');  // each \n creates a new line
+    console.log('(d) Eat Dot');
+    console.log('(p) Eat Power-Pellet');
+    console.log('(1) Eat Inky' + showEdible(inky));
+    console.log('(2) Eat Blinky' + showEdible(blinky));
+    console.log('(3) Eat Pinky' + showEdible(pinky));
+    console.log('(4) Eat Clyde' + showEdible(clyde));
+    console.log('(q) Quit');
+  }
 }
 
 function displayPrompt() {
@@ -87,12 +98,38 @@ function eatGhost(ghost) {
   if (ghost["edible"] === false) {
   console.log('\nChomp! ' + ghost["name"] + ' the ' + ghost["colour"] + ' ghost just killed Pac-Man!');
   lives -= 1;
+  } else if (ghost["edible"] === true) {
+  console.log('\nChomp! ' + ghost["name"] + ' the ' + ghost["colour"] + ' ghost just got eaten!');
+  score += 200;
+  ghost["edible"] = false;
   }
 }
 
 function gameOver() {
   if (lives === 0) {
     process.exit();
+  }
+}
+
+function edibleGhost(ghost) {
+  ghost["edible"] = true;
+}
+
+function eatPowerPellet() {
+  console.log('\nChomp!');
+  score += 50;
+  powerPellets -= 1;
+  edibleGhost(inky);
+  edibleGhost(blinky);
+  edibleGhost(pinky);
+  edibleGhost(clyde);
+}
+
+function showEdible(ghost) {
+  if (ghost["edible"] === true) {
+    return " (Edible)";
+  } else {
+    return " (Inedible)";
   }
 }
 
@@ -105,6 +142,13 @@ function processInput(key) {
       break;
     case 'd':
       eatDot();
+      break;
+    case 'p':
+      if (powerPellets === 0) {
+        console.log('\nNo Power-Pellets left!');
+      } else {
+      eatPowerPellet();
+      }
       break;
     case '1':
       eatGhost(inky);
